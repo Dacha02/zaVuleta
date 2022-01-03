@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      form {
+        display: flex;
+        flex-direction: column;
+        width: 500px;
+      }
+      label {
+        margin: 10px 0px;
+      }
+      #lista {
+        margin-bottom: 20px;
+      }
+      #lista ul {
+        list-style-type: none;
+      }
+      #lista ul li {
+        float: left;
+      }
+      #lista ul li ul {
+        padding-left: 0px;
+      }
+      #lista ul li ul li {
+        float: none;
+      }
+    </style>
+  </head>
+  <body>
+    <form action="" id="forma1">
+      <label for="title">Title</label>
+      <select name="title" id="title">
+        <option value="mr">Mr</option>
+        <option value="mrs">Mrs</option>
+      </select>
+      <label for="fname">First name</label>
+      <input
+        type="text"
+        name="fname"
+        id="fname"
+        placeholder="Enter your first name"
+      />
+      <label for="lname">Last name</label>
+      <input
+        type="text"
+        name="lname"
+        id="lname"
+        placeholder="Enter your last name"
+      />
+      <label for="email">Email adress</label>
+      <input
+        type="text"
+        name="email"
+        id="email"
+        placeholder="Enter your email"
+      />
+      <label for="code">Code</label>
+      <input type="text" name="code" id="code" />
+      <label for="date">Date of birth(optional)</label>
+      <select name="day" id="day">
+        <option value="day">Day</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+      </select>
+      <select name="month" id="month">
+        <option value="month">Month</option>
+        <option value="jan">January</option>
+        <option value="feb">February</option>
+        <option value="mar">March</option>
+      </select>
+      <select name="year" id="year">
+        <option value="year">Year</option>
+        <option value="2000">2000</option>
+        <option value="2001">2001</option>
+        <option value="2002">2002</option>
+      </select>
+      <label for="password">Password</label>
+      <input
+        type="text"
+        name="password"
+        id="password"
+        placeholder="Enter your password"
+      />
+      <span>Your password needs to conatin at least 6 characters</span>
+      <label for="confPassword">Confirm password</label>
+      <input
+        type="text"
+        name="confPassword"
+        id="confPassword"
+        placeholder="Re-enter your password"
+      />
+      <input type="checkbox" name="chk" id="chk" />Yes send me free...
+      <input type="button" value="Register" />
+
+      <input type="file" name="" id="idfile" />
+    </form>
+
+    <div id="slike"></div>
+
+    <div id="lista">
+      <ul>
+        <li>
+          Prvi
+          <ul>
+            <li>Prvi 1</li>
+            <li>Prvi 2</li>
+            <li>Prvi 3</li>
+          </ul>
+        </li>
+        <li>
+          Drugi
+          <ul>
+            <li>Drugi 1</li>
+            <li>Drugi 2</li>
+            <li>Drugi 3</li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+    <br />
+    <input type="button" id="dodajRed" value="Dodaj red" />
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+      $(document).ready(function () {
+        //2 pod a
+        $("input, select").css({
+          color: "red",
+        });
+        let tekstUpozorenja = $(
+          "<span>Please enter your information below </span>"
+        );
+        tekstUpozorenja.css("color", "red");
+        $("body").prepend(tekstUpozorenja);
+        //2 pod b
+        $("#fname").on("blur", () => {
+          let regIme = /^[A-ZŽŠĐČĆ][a-zžšđčć]{2,20}$/;
+          if (regIme.test($("#fname").val())) {
+            $("#fname").css("color", "black");
+          } else {
+            $("#fname").css("color", "red");
+          }
+        });
+        $("#lname").on("blur", () => {
+          let regIme = /^[A-ZŽŠĐČĆ][a-zžšđčć]{2,20}$/;
+          if (regIme.test($("#lname").val())) {
+            $("#lname").css("color", "black");
+          } else {
+            $("#lname").css("color", "red");
+          }
+        });
+        $("#email").on("blur", () => {
+          let regEmail = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+          if (regEmail.test($("#email").val())) {
+            $("#email").css("color", "black");
+          } else {
+            $("#email").css("color", "red");
+          }
+        });
+
+        $("#day").on("blur", () => {
+          let dan = $("#day").val();
+          if (dan == "day") {
+            $("#day").css("color", "red");
+          } else {
+            $("#day").css("color", "black");
+          }
+        });
+
+        $("#month").on("blur", () => {
+          let mesec = $("#month").val();
+          if (mesec == "month") {
+            $("#month").css("color", "red");
+          } else {
+            $("#month").css("color", "black");
+          }
+        });
+        $("#year").on("blur", () => {
+          let godina = $("#year").val();
+          if (godina == "year") {
+            $("#year").css("color", "red");
+          } else {
+            $("#year").css("color", "black");
+          }
+        });
+
+        //3 pod a
+        $("#idfile").on("change", () => {
+          let putanja = $("#idfile").val();
+          console.log($("#idfile").val());
+          let ime = putanja.substring(
+            putanja.lastIndexOf("\\") + 1,
+            putanja.indexOf(".")
+          );
+          let eks = putanja.substring(
+            putanja.lastIndexOf(".") + 1,
+            putanja.length
+          );
+          console.log(`Ime fajla: ${ime}, tip fajla: ${eks}`);
+        });
+
+        let drzave = ["Srbija", "Bosna", "Slovenija"];
+        let gradovi = [
+          "Beograd Novi-Sad Nis",
+          "Sarajevo Kakanj Brcko",
+          "Ljubljna Maribor Brezice",
+        ];
+        let ddl1 = $("<select id='ddl1'></select>");
+        for (let i = 0; i < drzave.length; i++) {
+          let op1 = $(`<option value="${drzave[i]}">${drzave[i]}</option>`);
+          ddl1.append(op1);
+        }
+        $("#forma1").append(ddl1);
+
+        $("#ddl1").on("blur", () => {
+          let index = ddl1.prop("selectedIndex");
+          let odabrani = gradovi[index].split(" ");
+          console.log(odabrani);
+          console.log(index);
+          let ddl2 = $("<select id='ddl2'></select>");
+          for (let i = 0; i < odabrani.length; i++) {
+            let op2 = $(
+              `<option value="${odabrani[i]}">${odabrani[i]}</option>`
+            );
+            ddl2.append(op2);
+          }
+          $("#forma1").append(ddl2);
+        });
+
+        $("#lista ul li").on("click", function () {
+          $(this).children(":first").toggle("slow");
+        });
+        $("#lista ul li ul").hide();
+
+        let tabela = $("<table></table>");
+        let thead = $("<thead></thead>");
+        let tbody = $("<tbody></tbody>");
+        let tr1 = $("<tr><td>Text ide ovde</td></tr>");
+        thead.append(tr1);
+        tabela.append(thead);
+        tabela.append(tbody);
+        $("body").append(tabela);
+
+        for (let i = 2; i < 5; i++) {
+          let tr = $(
+            `<tr><td>Text</td><td><input type='button' class='dugme' id='${i}' value='obelezi'/></td></tr>`
+          );
+          tbody.append(tr);
+        }
+        tabela.append(tbody);
+        $("table tbody .dugme").click((e) => {
+          let id = e.target.id;
+          console.log(id);
+          id = id - 1;
+          $(`table tbody tr:nth-child(${id})`).remove();
+        });
+        $("table tbody .dugme").click((e) => {
+          $(e.target).parent().parent().remove();
+        });
+
+        $("#dodajRed").click(() => {
+          let noviRed = $(
+            `<tr><td>Text</td><td><input type='button' value='Ukoni' class="dugme" /></td></tr>`
+          );
+
+          $("tbody").append(noviRed);
+        });
+      });
+    </script>
+  </body>
+</html>

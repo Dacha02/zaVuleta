@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      form {
+        width: 500px;
+        display: flex;
+        flex-direction: column;
+      }
+      #fslBrDece {
+        display: flex;
+        flex-direction: column;
+      }
+      p {
+        margin: 0px;
+        color: red;
+      }
+    </style>
+  </head>
+  <body>
+    <form action="">
+      <fieldset>
+        <label for="lokacija" id="labelLokacija">Lokacija</label>
+        <br />
+        <select name="lokacija" id="lokacija">
+          <option value="">Izaberite</option>
+          <option value="Beograd">Beograd</option>
+          <option value="Novi Sad">Novi Sad</option>
+        </select>
+      </fieldset>
+      <fieldset>
+        <label for="datumd" id="labelDatumD">Datum dolaska</label>
+        <br />
+        <input type="date" id="datumd" name="datumd" />
+      </fieldset>
+      <fieldset>
+        <label for="datumo" id="labelDatumO">Datum odlaska</label>
+        <br />
+        <input type="date" id="datumo" name="datumo" />
+      </fieldset>
+      <fieldset>
+        <label for="brOdraslih">Broj odraslih</label>
+        <br />
+        <select name="brOdraslih" id="brOdraslih">
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+        </select>
+      </fieldset>
+      <fieldset id="fslBrDece">
+        <label for="brDece">Broj dece</label>
+        <br />
+        <select name="brDece" id="brDece">
+          <option value="0">0</option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+        </select>
+      </fieldset>
+      <fieldset>
+        <label for="brSoba">Broj soba</label>
+        <br />
+        <input type="radio" name="brSoba" id="1" value="1" />1
+        <br />
+        <input type="radio" name="brSoba" id="2" value="2" />2
+        <br />
+        <input type="radio" name="brSoba" id="3" value="3" />3
+        <br />
+        <input type="radio" name="brSoba" id="3" value="4" />4
+      </fieldset>
+      <fieldset>
+        <label for="podaciOputinku">Podaci o putniku</label>
+        <br />
+        <input type="checkbox" name="podaciOputinku" id="podaciOputinku" />
+      </fieldset>
+      <fieldset>
+        <label for="imeIprezime">Ime i prezime prijatelja za kontakt</label>
+        <br />
+        <input type="text" name="imeIprezime" id="imeIprezime" />
+      </fieldset>
+      <fieldset>
+        <input type="button" id="batn" value="Search" />
+      </fieldset>
+    </form>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+      $(document).ready(function () {
+        $("#batn").on("click", function () {
+          let txt = $("<p></p>");
+          //Provera lokacije
+          if ($("#lokacija").val() == "") {
+            txt = $("<p></p>").text("Niste izabrali lokaciju");
+            $("#labelLokacija").prepend(txt);
+          } else {
+            $("#labelLokacija p").remove();
+          }
+          //Provera datuma dolaska
+          if ($("#datumd").val() == "") {
+            txt = $("<p></p>").text("Niste izabrali datum dolaska");
+            $("#labelDatumD").prepend(txt);
+          } else {
+            $("#labelDatumD p").remove();
+          }
+          //Provera datuma odlaska
+          if ($("#datumo").val() == "") {
+            txt = $("<p></p>").text("Niste izabrali daum odlaska");
+            $("#labelDatumO").prepend(txt);
+          } else {
+            $("#labelDatumO p").remove();
+            //Ispisivanje datuma recima januar...
+            let datum = new Date($("#datumo").val());
+            txt = $("<p></p>");
+            switch (datum.getMonth()) {
+              case 10:
+                txt.text("Novembar");
+                $("#labelDatumO").prepend(txt);
+                break;
+              case 11:
+                txt.text("Decembar");
+                $("#labelDatumO").prepend(txt);
+                break;
+            }
+          }
+          //Provera da li su datumi u istom mesecu
+          let datumd = new Date($("#datumd").val());
+          let datumo = new Date($("#datumo").val());
+
+          if (datumd.getMonth() == datumo.getMonth()) {
+            txt = $("<p></p>").text(
+              `Broj dana je ${datumo.getDate() - datumd.getDate()} `
+            );
+            $("#labelDatumD").prepend(txt);
+          } else {
+            $("#labelDatumD p").remove(txt);
+          }
+
+          //Selektovanje broja soba
+          let brOdr = $("#brOdraslih").val();
+          let brDece = $("#brDece").val();
+          let staje = (parseInt(brOdr) + parseInt(brDece)) / 4;
+          if (staje <= 1) $("#1").prop("checked", true);
+          else if (staje <= 2) $("#2").prop("checked", true);
+
+          //f)
+          if (brDece != 0) {
+            for (let i = 0; i < brDece; i++) {
+              txt = $(
+                "<input type='text' placeholder='Unesite godine deteta'/>"
+              );
+              $("#fslBrDece").append(txt);
+            }
+          }
+          //h)
+          if ($("#podaciOputinku").is(":checked")) {
+            $("#imeIprezime").focus();
+          }
+        });
+
+        //g)
+        $("#imeIprezime").on("blur", function () {
+          let regx = /^[A-Z][a-z]{3,10}\s[A-Z][a-z]{3,10}$/;
+          if (regx.test($("#imeIprezime").val())) {
+            console.log("Tacno");
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

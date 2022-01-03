@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .crveni-text {
+        color: red;
+      }
+      .crveni-border-pozadina {
+        background-color: rosybrown;
+        border: 1px solid red;
+      }
+      #meni ul {
+        list-style-type: none;
+      }
+      #meni ul li {
+        float: left;
+        margin-right: 10px;
+      }
+      #meni ul li ul {
+        padding-left: 0px;
+      }
+      #meni ul li ul li {
+        float: none;
+      }
+      #animacija {
+        width: 200px;
+        height: 200px;
+        background-color: royalblue;
+        margin-top: 100px;
+      }
+      table td {
+        border: 1px solid black;
+      }
+    </style>
+  </head>
+  <body>
+    <form action="" id="forma1">
+      Mesto <span>*</span>
+      <input type="text" name="mesto" id="mesto" /> Postanski broj
+      <span>*</span> <input type="text" name="pBroj" id="pBroj" />
+      <br />
+      <select name="" id="">
+        <option value="Beograd (uzi)">Beograd (uzi) <span>*</span></option>
+        <option value="Nis (siri)">Nis (siri)</option>
+        <option value="Novi Sad ">Novi Sad</option>
+      </select>
+      <select name="" id="">
+        <option value="Srbija">Srbija <span>*</span></option>
+        <option value="Nemacka">Nemacka</option>
+        <option value="Slovenija">Slovenija</option>
+      </select>
+      <br />
+      Adresa <span>*</span> <input type="text" name="adresa" id="adresa" />
+      <br />
+      Telefon <input type="text" name="telefon1" id="telefon1" /> Telefon 2
+      <input type="text" name="telefon2" id="telefon2" />
+      <br />
+      Mobilni <span>*</span><input type="text" name="mob1" id="mob1" /> Mobilni2
+      <input type="text" name="mob2" id="mob2" />
+      <br />
+      Fax <input type="text" name="fax" id="fax" />
+      <br />
+      Ime <span>*</span> <input type="text" name="ime" id="ime" /> Prezime
+      <span>*</span> <input type="text" name="prezime" id="prezime" />
+      <br />
+      <select name="poreklo" id="poreklo">
+        <option value="porekloV">Poreklo vozila</option>
+        <option value="domaceT">Domace tablice</option>
+        <option value="naIme">Na ime kupca</option>
+      </select>
+
+      <input type="button" id="dugme" value="klikni" />
+
+      <div id="meni">
+        <ul>
+          <li>
+            Prvi
+            <ul id="prviUl">
+              <li>Prvi 1</li>
+              <li>Prvi 2</li>
+              <li>Prvi 3</li>
+            </ul>
+          </li>
+          <li>
+            Drugi
+            <ul id="drugiUl">
+              <li>Drugi 1</li>
+              <li>Drugi 2</li>
+              <li>Drugi 3</li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+
+      <div id="animacija"></div>
+    </form>
+
+    <form action="" id="forma2">
+      <input
+        type="text"
+        name=""
+        id="textBrojevi"
+        placeholder="Unesite broj racuna"
+      />
+      <br />
+      <br />
+      <input type="button" id="batn2" value="klikni me" />
+    </form>
+
+    <table>
+      <thead>
+        <tr>
+          <td>Alo</td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Milos ne zna</td>
+        </tr>
+        <tr>
+          <td>Milos ne zna</td>
+        </tr>
+        <tr>
+          <td>Milos ne zna</td>
+        </tr>
+        <tr>
+          <td>Milos ne zna</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+      $(document).ready(function () {
+        //4 pod d
+        $("table tr:odd").css("background-color", "gray");
+        $("table tr:even").css("background-color", "lightGray");
+
+        //3 pod c
+        let regBroj = /^[0-9]{18}$/;
+        $("#batn2").click(() => {
+          if (regBroj.test($("#textBrojevi").val())) {
+            let brojBre = $("#textBrojevi").val();
+            let noviBroj =
+              brojBre.substring(0, 3) +
+              "-" +
+              brojBre.substring(4, 16) +
+              ".-" +
+              brojBre.substring(16, 18) +
+              ".";
+            console.log(noviBroj);
+          }
+          //3 pod d
+          let datum = new Date();
+          let danNedelja = datum.getDate();
+          let sat = datum.getHours();
+          if (danNedelja == 6 || danNedelja == 0) {
+            alert("Poslato ali bice obradjeno u ponedeljak");
+          } else if (
+            (danNedelja != 6 || danNedelja != 0) &&
+            sat > 8 &&
+            sat < 17
+          ) {
+            alert("Poslato i obradjuje se");
+          } else if (
+            (danNedelja != 6 || danNedelja != 0) &&
+            (sat < 8 || sat > 17)
+          ) {
+            alert("Nije radno vreme");
+          }
+        });
+        //3 pod a
+
+        let info = [
+          "Prvi vlasnik",
+          "Servisna knjiga",
+          "Prilagodjeno invalidima",
+          "Kupljen nov u Srbiji",
+          "Rezervni kljuc",
+          "Taxi",
+        ];
+        let divChk = $("<div id='divZaBokseve'></div>");
+        let lmao = $("<input type='checkbox' class='cb'/ >");
+        let t = info[0];
+        let fav = $("<i class'fa fa info'></i>");
+        divChk.append(lmao, t, fav);
+        $("#forma1").append(divChk);
+        for (let i = 1; i < info.length; i++) {
+          let lmao = $("<input type='checkbox' class='cb'/ >");
+          let t = info[i];
+          let br = $("<br />");
+          divChk.append(lmao, t, br);
+        }
+        //3 pod b)
+        $(".cb").change(() => {
+          let nizC = $(".cb");
+          let br = 0;
+          for (let i = 0; i < nizC.length; i++) {
+            if (nizC[i].checked == true) {
+              br++;
+            }
+          }
+          if (br >= 4) {
+            $("#forma1 select").remove();
+            let sl = $("<select></select>");
+            $("#forma1").append(sl);
+            for (let j = 0; j < nizC.length; j++) {
+              if (nizC[j].checked == true) {
+                let op = $(`<option values="${j}">${j}</option>`);
+                sl.append(op);
+              }
+            }
+          } else {
+            $("#forma1 select").remove();
+          }
+        });
+        //4 pod c
+        function loop() {
+          $("#animacija").animate({ opacity: "0" }, 2000);
+          $("#animacija").animate({ opacity: "1" }, 2000);
+        }
+        setInterval(function () {
+          loop();
+        }, 2000);
+
+        //4 pod b
+        $("#meni ul li").click(function () {
+          $(this).children(":first").toggle("slow");
+        });
+
+        $("#meni ul li ul").hide();
+
+        $("#mesto, #pBroj, #adresa, #mob1, #ime, #prezime ").addClass(
+          "crveni-border-pozadina"
+        );
+        $("#mesto, #pBroj, #adresa, #mob1, #ime, #prezime ")
+          .prev()
+          .addClass("crveni-text");
+
+        //a)
+        let reg = /^[A-ZŽŠČĆĐ][a-zžšđćč]{1,7}$/;
+        //c)
+        let regAdr =
+          /^[A-ZŽŠČĆĐ][a-zžšđćč]{2,9}(\s[A-ZŽŠČĆĐ]?[a-zžšđćč]{2,9})*\s[0-9]{1,4}[a-zžšđćč]*$/;
+        //b
+        let regMob = /^(06)[0-9]{6,7}$/;
+        let greske = [];
+        ///// ON BLURRRRR
+        $("#ime, #prezime, #adresa, #mob1, #mesto, #pBroj, #poreklo").on(
+          "blur",
+          () => {
+            if (reg.test($("#ime").val())) {
+              $("#ime").removeClass("crveni-border-pozadina");
+              $("#ime").prev().removeClass("crveni-text");
+            } else {
+              $("#ime").addClass("crveni-border-pozadina");
+              $("#ime").prev().addClass("crveni-text");
+              greske.unshift("Pogresno ime");
+            }
+
+            if (reg.test($("#prezime").val())) {
+              $("#prezime").removeClass("crveni-border-pozadina");
+              $("#prezime").prev().removeClass("crveni-text");
+            } else {
+              $("#prezime").addClass("crveni-border-pozadina");
+              $("#prezime").prev().addClass("crveni-text");
+              greske.unshift("Pogresno prezime");
+            }
+            //b)
+            if (regMob.test($("#mob1").val())) {
+              $("#mob1").removeClass("crveni-border-pozadina");
+              $("#mob1").prev().removeClass("crveni-text");
+            } else {
+              $("#mob1").addClass("crveni-border-pozadina");
+              $("#mob1").prev().addClass("crveni-text");
+              greske.unshift("Pogresan mobilni");
+            }
+            //c)
+            if (regAdr.test($("#adresa").val())) {
+              $("#adresa").removeClass("crveni-border-pozadina");
+              $("#adresa").prev().removeClass("crveni-text");
+            } else {
+              $("#adresa").addClass("crveni-border-pozadina");
+              $("#adresa").prev().addClass("crveni-text");
+              greske.unshift("Pogresna adresa");
+            }
+            //d
+            let nizMesto = ["Beograd", "Nis", "Novi Sad"];
+            let nizPosta = ["11309", "1253", "1111"];
+            let jeste = -1;
+            for (let i = 0; i < nizMesto.length; i++) {
+              if ($("#mesto").val() == nizMesto[i]) {
+                jeste = i;
+              }
+            }
+            if (jeste != -1) {
+              $("#mesto").removeClass("crveni-border-pozadina");
+              $("#mesto").prev().removeClass("crveni-text");
+              $("#pBroj").val(nizPosta[jeste]);
+              $("#pBroj").removeClass("crveni-border-pozadina");
+              $("#pBroj").prev().removeClass("crveni-text");
+            } else {
+              greske.unshift("Pogresno mesto");
+            }
+
+            let poreklo = $("#poreklo").val();
+            if (poreklo == "domaceT") {
+              let check = $("<input type='checkbox' id='check1'/>");
+              $("#forma1").append(check);
+              $("#forma1").append("<span>Vodi se na mene</span>");
+            } else if (poreklo == "naIme") {
+              let ddl = $(`<select>
+                    <option value"zemljaUvoza">Zemlja uvoza</option>
+                    <option value"italija">Italija</option>
+                    <option value"nemacka">Nemacka</option>
+                    </select>`);
+              $("#forma1").append(ddl);
+            }
+          }
+        );
+        $("#dugme").on("click", () => {
+          console.log(greske);
+          let lista = $("<ul></ul>");
+          for (let i = 0; i < greske.length; i++) {
+            let novaGreska = $(`<li>${greske[i]}</li>`);
+            lista.append(novaGreska);
+          }
+          $("#forma1").append(lista);
+        });
+      });
+    </script>
+  </body>
+</html>
